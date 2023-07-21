@@ -46,28 +46,50 @@ public class Airport extends Traveller
             return true;
 
         }
-    public boolean searchFlight(String source,String destination)
-    {
+   
 
-        if(flights.contains(source) && flights.contains(destination))
+    public ArrayList searchFlightsBySourceAndDestination(String source, String destination) {
 
-            return true;
+        ArrayList matchingFlights = new ArrayList<>();
 
-        return false;
-      }
+        for (Flight flight : flights) {
 
-    public void bookTickets(Traveller traveller)
+            if (flight.getSource().equalsIgnoreCase(source) && flight.getDestination().equalsIgnoreCase(destination)) {
 
-    {
+                matchingFlights.add(flight);
 
-        if(availabletickets==0)
+            }
 
-            System.out.println("we can not book the tickets ");
+        }
 
-        else
+        return matchingFlights;
 
-            travellers.add(traveller);
     }
+
+   
+    public void bookTicket(String flightId, Traveller traveller) {
+
+        for (Flight flight : flights) {
+
+            if (flight.flightId.equalsIgnoreCase(flightId) && ( flight.getAvailableSeats() > 0)) {
+
+                flight.availableSeats--;
+
+                travellers.add(traveller);
+
+                System.out.println("Ticket booked successfully for " + traveller.getName() + " on flight " + flightId);
+
+                return;
+
+            }
+
+        }
+
+        System.out.println("No available seats for flight " + flightId);
+
+    }
+
 
  }
 
+ 
